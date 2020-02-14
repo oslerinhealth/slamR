@@ -1,7 +1,7 @@
 Package: slamR
 Type: Package
 Title: Structured Latent Attribute Models in R
-Version: 0.6.2
+Version: 0.1.0
 Date: 2020-02-13
 Authors@R: c(
      person("Zhenke", "Wu", email="zhenkewu@umich.edu",role=c("cre","aut","cph"),
