@@ -10,6 +10,7 @@ observations with SLAM, please cite the following paper:
 |       | Citation     | Paper Link
 | -------------  | -------------  | -------------  |
 | SLAM - known Q    | Gu Y and Xu G (2019). Learning attribute patterns in high-dimensional structured latent attribute models. *Journal of Machine Learning Research* 20.115: 1-58   |[Link](http://jmlr.org/papers/v20/19-197.html)| 
+| SLAM - hierarchical attributes, unknown Q | Gu Y and Xu G (2019). Identification and Estimation of Hierarchical Latent Attribute Models. arXiv:1906.07869| [link](https://arxiv.org/abs/1906.07869)|
 
 
 ## Table of content
