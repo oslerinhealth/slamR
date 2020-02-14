@@ -5,7 +5,7 @@ An R package for Structured Latent Attribute Models (SLAM)
 **Maintainer**: Zhenke Wu, zhenkewu@umich.edu
 
 **References**: If you are using **slamR** for clustering multivariate binary
-observations with SLAM, please cite the following paper:
+observations with SLAM, please cite the following papers:
 
 |       | Citation     | Paper Link
 | -------------  | -------------  | -------------  |
