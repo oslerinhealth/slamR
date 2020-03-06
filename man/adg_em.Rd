@@ -2,7 +2,7 @@
 % Please edit documentation in R/screen.R
 \name{adg_em}
 \alias{adg_em}
-\title{screen Q using Gibbs (Alternating Gibbs)}
+\title{Estimate Q, screening latent attributes (Alternating Gibbs)}
 \usage{
 adg_em(
   X,
@@ -12,7 +12,8 @@ adg_em(
   err_prob,
   must_maxiter = 0,
   D_mat = NULL,
-  X1 = NULL
+  X1 = NULL,
+  model = "DINA"
 )
 }
 \arguments{
@@ -34,6 +35,8 @@ adg_em(
         responses are "children" of each first-level response. Default is \code{NULL}}
 
 \item{X1}{N by J1 binary data matrix - level 1; default is \code{NULL}}
+
+\item{model}{"DINA" (default) or "DINO"}
 }
 \value{
 \itemize{
@@ -43,15 +46,9 @@ adg_em(
 \item c J dimensional 1-slipping parameter
 \item g J dimensional guessing parameter
 }
-
-\itemize{
-\item Z_est Estimated latent attributes for all people
-\item Z_candi candidate latent attribute patterns (unique)
-\item Q_arr a list of Q matrices obtained from the algorithm
-\item c J dimensional 1-slipping parameter
-\item g J dimensional guessing parameter
-}
 }
 \description{
-screen Q using Gibbs (Alternating Gibbs)
+This function implements the Alternating Direction Gibbs EM (ADG-EM)
+algorithm in the scenario of responses observed over many taxonomies
+(trees)
 }

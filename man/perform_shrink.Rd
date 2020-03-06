@@ -5,7 +5,16 @@
 \title{performs shrinkage estimation and use Extended BIC (EBIC) to select the
 best tunning parameter in the penalized likelihood from an entire solution path}
 \usage{
-perform_shrink(X, Q_est, Z_candi, lambda_vec, c_ini, g_ini, is_sub = 0)
+perform_shrink(
+  X,
+  Q_est,
+  Z_candi,
+  lambda_vec,
+  c_ini,
+  g_ini,
+  is_sub = 0,
+  model = "DINA"
+)
 }
 \arguments{
 \item{X}{N by J data matrix}
@@ -22,6 +31,8 @@ perform_shrink(X, Q_est, Z_candi, lambda_vec, c_ini, g_ini, is_sub = 0)
 \item{g_ini}{J initial values of guessing parameters}
 
 \item{is_sub}{use subsample (1) or not (0; default) - NB: not implemented.}
+
+\item{model}{"DINA" (default) or "DINO"}
 }
 \value{
 \itemize{

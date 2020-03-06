@@ -89,7 +89,7 @@ arma::mat get_ideal_resp(arma::mat Q, arma::mat Z){
 //' @param A matrix of size d1 by d2
 //' @param B matrix of size d3 by d1
 //'
-//' @return an array of dimension d3 by d2 by d1
+//' @return an array of dimension d3 by d1 by d2
 //'
 //' @examples
 //' bsxfun_7_pow(matrix(c(1,2,3,4,5,6),nrow=3,byrow=TRUE),
@@ -111,4 +111,62 @@ arma::cube bsxfun_7_pow(arma::mat A, arma::mat B){
   return(xi);
 }
 
+//' 7 shaped binary array operation by bsxfun from matlab but
+//' with "hinge" shape
+//'
+//'
+//' @param A matrix of size d1 by d2
+//' @param B matrix of size d3 by d2
+//'
+//' @return a matrix of dimension d3 by d1 by d2
+//'
+//' @examples
+//' bsxfun_7_hinge_pow(matrix(c(1,2,3,4,5,6),nrow=3,byrow=TRUE),
+//' matrix(c(1:18),nrow=9,byrow=TRUE))
+//' @useDynLib slamR
+//' @importFrom Rcpp sourceCpp
+//' @export
+// [[Rcpp::export]]
+arma::cube bsxfun_7_hinge_pow(arma::mat A, arma::mat B){
+  int d1 = A.n_rows, d2 = A.n_cols, d3 = B.n_rows;
+  arma::cube xi(d3,d1,d2);xi.ones();
+  for (int i=0;i<d3;i++){
+    for (int k=0;k<d1; k++){
+      for (int j=0;j<d2; j++){
+        xi(i,k,j) = pow(A(k,j),B(i,j));
+      }
+    }
+  }
+  return(xi);
+}
+
+
+//' 7 shaped binary array operation by bsxfun from matlab but
+//' with "hinge" shape; multiple along dimension d2
+//'
+//'
+//' @param A matrix of size d1 by d2
+//' @param B matrix of size d3 by d2
+//'
+//' @return a matrix of dimension d3 by d1 by d2
+//'
+//' @examples
+//' bsxfun_7_hinge_pow_prod(matrix(c(1,2,3,4,5,6),nrow=3,byrow=TRUE),
+//' matrix(c(1:18),nrow=9,byrow=TRUE))
+//' @useDynLib slamR
+//' @importFrom Rcpp sourceCpp
+//' @export
+// [[Rcpp::export]]
+arma::mat bsxfun_7_hinge_pow_prod(arma::mat A, arma::mat B){
+  int d1 = A.n_rows, d2 = A.n_cols, d3 = B.n_rows;
+  arma::mat xi(d3,d1);xi.ones();
+  for (int i=0;i<d3;i++){
+    for (int k=0;k<d1; k++){
+      for (int j=0;j<d2; j++){
+        xi(i,k) *= pow(A(k,j),B(i,j));
+      }
+    }
+  }
+  return(xi);
+}
 

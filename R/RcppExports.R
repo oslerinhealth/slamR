@@ -38,7 +38,7 @@ get_ideal_resp <- function(Q, Z) {
 #' @param A matrix of size d1 by d2
 #' @param B matrix of size d3 by d1
 #'
-#' @return an array of dimension d3 by d2 by d1
+#' @return an array of dimension d3 by d1 by d2
 #'
 #' @examples
 #' bsxfun_7_pow(matrix(c(1,2,3,4,5,6),nrow=3,byrow=TRUE),
@@ -48,5 +48,43 @@ get_ideal_resp <- function(Q, Z) {
 #' @export
 bsxfun_7_pow <- function(A, B) {
     .Call('_slamR_bsxfun_7_pow', PACKAGE = 'slamR', A, B)
+}
+
+#' 7 shaped binary array operation by bsxfun from matlab but
+#' with "hinge" shape
+#'
+#'
+#' @param A matrix of size d1 by d2
+#' @param B matrix of size d3 by d2
+#'
+#' @return a matrix of dimension d3 by d1 by d2
+#'
+#' @examples
+#' bsxfun_7_hinge_pow(matrix(c(1,2,3,4,5,6),nrow=3,byrow=TRUE),
+#' matrix(c(1:18),nrow=9,byrow=TRUE))
+#' @useDynLib slamR
+#' @importFrom Rcpp sourceCpp
+#' @export
+bsxfun_7_hinge_pow <- function(A, B) {
+    .Call('_slamR_bsxfun_7_hinge_pow', PACKAGE = 'slamR', A, B)
+}
+
+#' 7 shaped binary array operation by bsxfun from matlab but
+#' with "hinge" shape; multiple along dimension d2
+#'
+#'
+#' @param A matrix of size d1 by d2
+#' @param B matrix of size d3 by d2
+#'
+#' @return a matrix of dimension d3 by d1 by d2
+#'
+#' @examples
+#' bsxfun_7_hinge_pow_prod(matrix(c(1,2,3,4,5,6),nrow=3,byrow=TRUE),
+#' matrix(c(1:18),nrow=9,byrow=TRUE))
+#' @useDynLib slamR
+#' @importFrom Rcpp sourceCpp
+#' @export
+bsxfun_7_hinge_pow_prod <- function(A, B) {
+    .Call('_slamR_bsxfun_7_hinge_pow_prod', PACKAGE = 'slamR', A, B)
 }
 

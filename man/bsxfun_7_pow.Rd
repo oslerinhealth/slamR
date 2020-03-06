@@ -12,7 +12,7 @@ bsxfun_7_pow(A, B)
 \item{B}{matrix of size d3 by d1}
 }
 \value{
-an array of dimension d3 by d2 by d1
+an array of dimension d3 by d1 by d2
 }
 \description{
 this function also multiple along the rows of A and columsn of B

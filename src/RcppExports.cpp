@@ -30,10 +30,36 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// bsxfun_7_hinge_pow
+arma::cube bsxfun_7_hinge_pow(arma::mat A, arma::mat B);
+RcppExport SEXP _slamR_bsxfun_7_hinge_pow(SEXP ASEXP, SEXP BSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type A(ASEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type B(BSEXP);
+    rcpp_result_gen = Rcpp::wrap(bsxfun_7_hinge_pow(A, B));
+    return rcpp_result_gen;
+END_RCPP
+}
+// bsxfun_7_hinge_pow_prod
+arma::mat bsxfun_7_hinge_pow_prod(arma::mat A, arma::mat B);
+RcppExport SEXP _slamR_bsxfun_7_hinge_pow_prod(SEXP ASEXP, SEXP BSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type A(ASEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type B(BSEXP);
+    rcpp_result_gen = Rcpp::wrap(bsxfun_7_hinge_pow_prod(A, B));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_slamR_get_ideal_resp", (DL_FUNC) &_slamR_get_ideal_resp, 2},
     {"_slamR_bsxfun_7_pow", (DL_FUNC) &_slamR_bsxfun_7_pow, 2},
+    {"_slamR_bsxfun_7_hinge_pow", (DL_FUNC) &_slamR_bsxfun_7_hinge_pow, 2},
+    {"_slamR_bsxfun_7_hinge_pow_prod", (DL_FUNC) &_slamR_bsxfun_7_hinge_pow_prod, 2},
     {NULL, NULL, 0}
 };
 

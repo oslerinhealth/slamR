@@ -14,6 +14,7 @@
 #' @param c_ini J initial values of 1-slipping parameters
 #' @param g_ini J initial values of guessing parameters
 #' @param is_sub use subsample (1) or not (0; default) - NB: not implemented.
+#' @param model "DINA" (default) or "DINO"
 #'
 #' @return
 #' \itemize{
@@ -24,7 +25,15 @@
 #' }
 #' @export
 
-perform_shrink <- function(X, Q_est, Z_candi, lambda_vec, c_ini, g_ini, is_sub=0){
+perform_shrink <- function(X, Q_est, Z_candi, lambda_vec, c_ini, g_ini,
+                           is_sub=0,model="DINA"){
+
+  # for DINO, do the following transformation:
+  if(model=="DINO"){
+    X <- 1-X
+    Z_candi <- 1-Z_candi
+  }
+
   num_candi <- nrow(Z_candi)
   K <- ncol(Z_candi)
   N <- nrow(X)
@@ -45,7 +54,7 @@ perform_shrink <- function(X, Q_est, Z_candi, lambda_vec, c_ini, g_ini, is_sub=0
 
   for (i in 1:tune_len){
     if (is_sub==0){
-      res <- get_DINA_PEM(X,Q,Z_candi,lambda_vec[i],c,g,nu,thres_c) # <--------------------- work.
+      res <- get_PEM(X,Q,Z_candi,lambda_vec[i],c,g,nu,thres_c) # <--------------------- work.
       nu <- res$nu
       c  <- res$c
       g  <- res$g
@@ -56,8 +65,8 @@ perform_shrink <- function(X, Q_est, Z_candi, lambda_vec, c_ini, g_ini, is_sub=0
     mat_nu[i,] <- nu
 
     A_est <- Z_candi[nu>thres,,drop=FALSE] # get rid of insignificant patterns.
-    #res <- get_DINA_EM(X,Q,A_est,err_prob,c,g)
-    res <- get_DINA_EM(X,Q,A_est,err_prob) # <---- not uising initial c,g from PEM.
+    #res <- get_EM(X,Q,A_est,err_prob,c,g)
+    res <- get_EM(X,Q,A_est,err_prob) # <---- not uising initial c,g from PEM.
     loglik_EM <- res$loglik # for calculating EBIC.
 
     EBIC_vec[i] <- -2*loglik_EM+2^K*log(N)+2*log(nchoosek_prac(2^K,nrow(A_est)))
@@ -85,6 +94,7 @@ perform_shrink <- function(X, Q_est, Z_candi, lambda_vec, c_ini, g_ini, is_sub=0
 #' @param nu_ini initial potentials
 #' @param thres_c threshold for making sure M step does not generate negative
 #'  probabilities (algorithm 1 of Xu and Gu JMIR 2019)
+#' @param model "DINA" (default) or "DINO"
 #' @return
 #' \itemize{
 #' \item nu vector of potential ("Delta")
@@ -92,7 +102,7 @@ perform_shrink <- function(X, Q_est, Z_candi, lambda_vec, c_ini, g_ini, is_sub=0
 #' \item g guessing parameter
 #' }
 #' @export
-get_DINA_PEM <- function(X,Q,A,lambda,c_ini,g_ini,nu_ini,thres_c){
+get_PEM <- function(X,Q,A,lambda,c_ini,g_ini,nu_ini,thres_c,model="DINA"){
   J <- nrow(Q)
   K <- ncol(Q)
   N <- nrow(X)
@@ -105,7 +115,9 @@ get_DINA_PEM <- function(X,Q,A,lambda,c_ini,g_ini,nu_ini,thres_c){
   itera <- 0
 
   n_in <- nrow(A)
-  ideal_resp <- t(get_ideal_resp(Q,A))
+  if (model=="DINA"){ideal_resp <- t(get_ideal_resp(Q,A))}
+  if (model=="DINO"){ideal_resp <- 1-t(get_ideal_resp(Q,1-A))}
+
   delta <- nu_ini*n_in
 
   obj_func <- 0
@@ -117,12 +129,16 @@ get_DINA_PEM <- function(X,Q,A,lambda,c_ini,g_ini,nu_ini,thres_c){
 
     # prob for each response pattern in X and each attribute profile, under
     # current values of g and c
-    posi_part <- matrix(0,nrow=n_in,ncol=N)
-    nega_part <- matrix(0,nrow=n_in,ncol=N)
-    for (ii in 1:N){ # can improve using log....
-      posi_part[,ii] <- apply(sweep(t(theta_mat),2,X[ii,],"^"),1,prod)
-      nega_part[,ii] <- apply(sweep(t(1-theta_mat),2,1-X[ii,],"^"),1,prod)
-    }
+    # posi_part <- matrix(0,nrow=n_in,ncol=N)
+    # nega_part <- matrix(0,nrow=n_in,ncol=N)
+    # for (ii in 1:N){ # can improve using log....
+    #   posi_part[,ii] <- apply(sweep(t(theta_mat),2,X[ii,],"^"),1,prod)
+    #   nega_part[,ii] <- apply(sweep(t(1-theta_mat),2,1-X[ii,],"^"),1,prod)
+    # }
+    posi_part <- t(bsxfun_7_hinge_pow_prod(t(theta_mat),X))
+    nega_part <- t(bsxfun_7_hinge_pow_prod(t(1-theta_mat),1-X))
+    # posi_part < apply(bsxfun_7_hinge_pow(t(theta_mat),X),c(1,2),prod)
+    # nega_part < apply(bsxfun_7_hinge_pow(t(1-theta_mat),1-X),c(1,2),prod)
 
     alpha_li0 <- sweep(t(posi_part)*t(nega_part),2,delta,"*")
     alpha_li <- alpha_li0/rowSums(alpha_li0) # N by n_in. phi_i_alpha
@@ -182,6 +198,7 @@ get_DINA_PEM <- function(X,Q,A,lambda,c_ini,g_ini,nu_ini,thres_c){
 #' @param A K-column latent attribute matrix
 #' @param err_prob error probability; for initializing c g
 #' @param c,g default to NULL, but can use values obtained from PEM.
+#' @param model "DINA" (default) or "DINO"
 #'
 #' @return
 #' \itemize{
@@ -191,7 +208,7 @@ get_DINA_PEM <- function(X,Q,A,lambda,c_ini,g_ini,nu_ini,thres_c){
 #' \item loglik log likelihood
 #' }
 #' @export
-get_DINA_EM <- function(X,Q,A,err_prob,c=NULL,g=NULL){
+get_EM <- function(X,Q,A,err_prob,c=NULL,g=NULL,model="DINA"){
   J <- nrow(Q)
   K <- ncol(Q)
   N <- nrow(X)
@@ -199,7 +216,8 @@ get_DINA_EM <- function(X,Q,A,err_prob,c=NULL,g=NULL){
   itera <- 0
 
   n_in <- nrow(A)
-  ideal_resp <- t(get_ideal_resp(Q,A))
+  if (model=="DINA"){ideal_resp <- t(get_ideal_resp(Q,A))}
+  if (model=="DINO"){ideal_resp <- 1-t(get_ideal_resp(Q,1-A))}
 
   obj_func <- 0
   obj_vec  <- NULL
@@ -217,12 +235,14 @@ get_DINA_EM <- function(X,Q,A,err_prob,c=NULL,g=NULL){
     # probability for each response pattern in X and each attribute profile
     # under current values of g and c:
 
-    posi_part <- matrix(0,nrow=n_in,ncol=N)
-    nega_part <- matrix(0,nrow=n_in,ncol=N)
-    for (ii in 1:N){ # can improve using log....
-      posi_part[,ii] <- apply(sweep(t(theta_mat),2,X[ii,],"^"),1,prod)
-      nega_part[,ii] <- apply(sweep(t(1-theta_mat),2,1-X[ii,],"^"),1,prod)
-    }
+    # posi_part <- matrix(0,nrow=n_in,ncol=N)
+    # nega_part <- matrix(0,nrow=n_in,ncol=N)
+    # for (ii in 1:N){ # can improve using log....
+    #   posi_part[,ii] <- apply(sweep(t(theta_mat),2,X[ii,],"^"),1,prod)
+    #   nega_part[,ii] <- apply(sweep(t(1-theta_mat),2,1-X[ii,],"^"),1,prod)
+    # }
+    posi_part <- t(bsxfun_7_hinge_pow_prod(t(theta_mat),X))
+    nega_part <- t(bsxfun_7_hinge_pow_prod(t(1-theta_mat),1-X))
 
     alpha_li0 <- t(posi_part)*t(nega_part)
     alpha_li <- alpha_li0/rowSums(alpha_li0) # N by n_in. phi_i_alpha
@@ -275,6 +295,7 @@ get_DINA_EM <- function(X,Q,A,err_prob,c=NULL,g=NULL){
 #' @param Q J by K structural matrix
 #' @param A_in C by K latent attributes
 #' @param err_prob error probabilities 0.2
+#' @param model "DINA" (default) or "DINO"
 #' @return
 #' \itemize{
 #' \item nu
@@ -284,7 +305,7 @@ get_DINA_EM <- function(X,Q,A,err_prob,c=NULL,g=NULL){
 #' \item Z_shrink
 #' }
 #' @export
-get_em_classify <- function(X,Q,A_in,err_prob){
+get_em_classify <- function(X,Q,A_in,err_prob,model="DINA"){
   J <- nrow(Q)
   K <- ncol(Q)
 
@@ -295,7 +316,8 @@ get_em_classify <- function(X,Q,A_in,err_prob){
   N0 <- N
 
   n_in <- nrow(A_in)
-  ideal_resp <- t(get_ideal_resp(Q,A_in)) # ideal response matrix.
+  if (model=="DINA"){ideal_resp <- t(get_ideal_resp(Q,A_in))}
+  if (model=="DINO"){ideal_resp <- 1-t(get_ideal_resp(Q,1-A_in))}
 
   nu <- rep(1/n_in,n_in)
 
@@ -312,10 +334,12 @@ get_em_classify <- function(X,Q,A_in,err_prob){
 
     posi_part <- matrix(0,nrow=n_in,ncol=N)
     nega_part <- matrix(0,nrow=n_in,ncol=N)
-    for (ii in 1:N){ # can improve using log....
-      posi_part[,ii] <- apply(sweep(t(theta_mat),2,X[ii,],"^"),1,prod)
-      nega_part[,ii] <- apply(sweep(t(1-theta_mat),2,1-X[ii,],"^"),1,prod)
-    }
+    # for (ii in 1:N){ # can improve using log....
+    #   posi_part[,ii] <- apply(sweep(t(theta_mat),2,X[ii,],"^"),1,prod)
+    #   nega_part[,ii] <- apply(sweep(t(1-theta_mat),2,1-X[ii,],"^"),1,prod)
+    # }
+    posi_part <- t(bsxfun_7_hinge_pow_prod(t(theta_mat),X))
+    nega_part <- t(bsxfun_7_hinge_pow_prod(t(1-theta_mat),1-X))
 
     alpha_li0 <- t(posi_part)*t(nega_part)
     alpha_li <- alpha_li0/rowSums(alpha_li0) # N by C. phi_i_alpha

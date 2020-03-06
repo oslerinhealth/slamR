@@ -1,23 +1,23 @@
 # screening
 
-##' screen Q using Gibbs (Alternating Gibbs)
-##'
-##' @param X N by J binary data matrix
-##' @param Z_ini N by K initial latent attributes
-##' @param Q_ini J by K inital Q matrix
-##' @param max_iter maximum iterations (e.g., 50)
-##' @param err_prob noise level
-##'
-##' @return
-##' \itemize{
-##' \item Z_est Estimated latent attributes for all people
-##' \item Z_candi candidate latent attribute patterns (unique)
-##' \item Q_arr a list of Q matrices obtained from the algorithm
-##' \item c J dimensional 1-slipping parameter
-##' \item g J dimensional guessing parameter
-##' }
-##'
-##' @export
+## screen Q using Gibbs (Alternating Gibbs)
+##
+## @param X N by J binary data matrix
+## @param Z_ini N by K initial latent attributes
+## @param Q_ini J by K inital Q matrix
+## @param max_iter maximum iterations (e.g., 50)
+## @param err_prob noise level
+##
+## @return
+## \itemize{
+## \item Z_est Estimated latent attributes for all people
+## \item Z_candi candidate latent attribute patterns (unique)
+##\item Q_arr a list of Q matrices obtained from the algorithm
+##\item c J dimensional 1-slipping parameter
+## \item g J dimensional guessing parameter
+## }
+##
+## @export
 #screen_Q_gibbs_large <- function(X,Z_ini,Q_ini,max_iter,err_prob){
 #  J <- nrow(Q_ini)
 #  K <- ncol(Q_ini)
@@ -145,6 +145,7 @@
 #'          trees are grown in the second layer, i.e., which second-level
 #'          responses are "children" of each first-level response. Default is \code{NULL}
 #' @param X1 N by J1 binary data matrix - level 1; default is \code{NULL}
+#' @param model "DINA" (default) or "DINO"
 #'
 #' @return
 #' \itemize{
@@ -157,9 +158,16 @@
 #' @importFrom matrixStats logSumExp
 #' @export
 adg_em <- function(X,Z_ini,Q_ini,max_iter,err_prob,must_maxiter=0,
-                        D_mat=NULL,X1=NULL){
+                   D_mat=NULL,X1=NULL,model="DINA"){
   # obtain a binary matrix specifying which subjets are linked to
   # which second-level responses
+
+  # for DINO, do the following transformation:
+  if(model=="DINO"){
+    X <- 1-X
+    Z_ini <- 1-Z_ini
+  }
+
   indmat_im <- NULL
   if (!is.null(D_mat) & !is.null(X1)){indmat_im <- X1%*%D_mat}
 

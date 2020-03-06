@@ -285,7 +285,7 @@ for (cc in 1:C1){
 
 
 ind_cc_arr <- vector("list",C1)
-png("data.png")
+png(file.path(production_dir,"data_level2.png"))
 par(mfrow=c(1,3))
 for (cc in 1:C1){
   ind_cc_arr[[cc]] <- apply(Z1,1,function(v) all(v==A_set1[cc,]))
@@ -312,7 +312,7 @@ for (cc in 1:C1){
         main=paste0(paste(A_set1[cc,],collapse = ""),"; FINER 2: pattern_ini-pattern_true"))
   image(f(Z_shrink2[ind_cc_arr[[cc]], ]-Z2[ind_cc_arr[[cc]], ]),
         main=paste0(paste(A_set1[cc,],collapse = ""),"; FINER 2: pattern_est-pattern_true"))
-  }
+}
 dev.off()
 
 #

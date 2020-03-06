@@ -4,7 +4,7 @@
 \alias{get_em_classify}
 \title{EM algorithm for estimating c, g and mixing parameter pi}
 \usage{
-get_em_classify(X, Q, A_in, err_prob)
+get_em_classify(X, Q, A_in, err_prob, model = "DINA")
 }
 \arguments{
 \item{X}{N by J data matrix}
@@ -14,6 +14,8 @@ get_em_classify(X, Q, A_in, err_prob)
 \item{A_in}{C by K latent attributes}
 
 \item{err_prob}{error probabilities 0.2}
+
+\item{model}{"DINA" (default) or "DINO"}
 }
 \value{
 \itemize{
