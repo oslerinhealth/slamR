@@ -20,7 +20,7 @@ the lowest item index.
 }
 }
 \description{
-Check if there is an item soley requiring attribute k
+Check if there is an item solely requiring attribute k
 for each attribute k = 1, 2, ..., K
 }
 \examples{

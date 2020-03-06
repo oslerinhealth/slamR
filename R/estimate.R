@@ -4,13 +4,13 @@
 
 
 #' performs shrinkage estimation and use Extended BIC (EBIC) to select the
-#' best tunning parameter in the penalized likelihood from an entire solution path
+#' best tuning parameter in the penalized likelihood from an entire solution path
 #'
 #' @param X N by J data matrix
 #' @param Q_est J by K Q after screening by \code{\link{adg_em}} (one-level version)
-#' @param Z_candi K-column candidate latent attributes (cnandidates;
+#' @param Z_candi K-column candidate latent attributes (candidates;
 #' \code{\link{adg_em}} (one-level version) )
-#' @param lambda_vec a descresing sequence of negative penalty parameters
+#' @param lambda_vec a decreasing sequence of negative penalty parameters
 #' @param c_ini J initial values of 1-slipping parameters
 #' @param g_ini J initial values of guessing parameters
 #' @param is_sub use subsample (1) or not (0; default) - NB: not implemented.
@@ -93,7 +93,7 @@ perform_shrink <- function(X, Q_est, Z_candi, lambda_vec, c_ini, g_ini,
 #' @param g_ini initial guessing parameters
 #' @param nu_ini initial potentials
 #' @param thres_c threshold for making sure M step does not generate negative
-#'  probabilities (algorithm 1 of Xu and Gu JMIR 2019)
+#'  probabilities (algorithm 1 of Xu and Gu JMLR 2019)
 #' @param model "DINA" (default) or "DINO"
 #' @return
 #' \itemize{

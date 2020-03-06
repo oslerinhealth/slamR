@@ -11,7 +11,7 @@ Authors@R: c(
      person("Mengbing", "Li", email="mengbing@umich.edu", role="ctb")
      )
 Maintainer: Zhenke Wu <zhenkewu@umich.edu>
-Description: This package implememnts fast algorithms to fit structured latent class models (SLAM)
+Description: This package implements fast algorithms to fit structured latent class models (SLAM)
     for high-dimensional dependent binary data (Gu and Xu, 2019,'JMLR'). SLAMs are a special family of 
     discrete latent variable models widely used in social and biological sciences. The goal is to learn from high-dimensional data the 
     signiﬁcant attribute patterns based on a SLAM with potentially high-dimensional conﬁgurations of the latent attributes.

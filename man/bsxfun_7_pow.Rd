@@ -15,7 +15,7 @@ bsxfun_7_pow(A, B)
 an array of dimension d3 by d1 by d2
 }
 \description{
-this function also multiple along the rows of A and columsn of B
+this function also multiple along the rows of A and columns of B
 }
 \examples{
 bsxfun_7_pow(matrix(c(1,2,3,4,5,6),nrow=3,byrow=TRUE),

@@ -28,7 +28,7 @@ generate_X_tax2(X1_sub, A_set20, D_mat, p_short, Q2, c, g, model = "DINA")
 
 \item X2 level 2 observed responses
 \item Z latent attribute profiles for all individuals at level 2
-\item X_true2 Ideal reasponse matrix
+\item X_true2 Ideal response matrix
 }
 }
 \description{

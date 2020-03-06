@@ -4,7 +4,7 @@
 ##
 ## @param X N by J binary data matrix
 ## @param Z_ini N by K initial latent attributes
-## @param Q_ini J by K inital Q matrix
+## @param Q_ini J by K initial Q matrix
 ## @param max_iter maximum iterations (e.g., 50)
 ## @param err_prob noise level
 ##

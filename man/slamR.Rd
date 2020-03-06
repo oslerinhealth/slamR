@@ -7,10 +7,10 @@
 \strong{m}odels in\strong{R}}
 \description{
 \code{slamR} implements scalable algorithms to fit structured latent attribute models
- (SLAM) for high-dimensional binary data observed over a single or multple levels
+ (SLAM) for high-dimensional binary data observed over a single or multiple levels
 of specificity. It works for
 \itemize{
-\item 1) unknow structural matrix Q,
+\item 1) unknown structural matrix Q,
 \item 2) unknown latent
 attribute set,
 \item 3) one ore more levels of binary data (observed over multiple binary or non-binary trees)

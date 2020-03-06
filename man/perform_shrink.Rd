@@ -3,7 +3,7 @@
 \name{perform_shrink}
 \alias{perform_shrink}
 \title{performs shrinkage estimation and use Extended BIC (EBIC) to select the
-best tunning parameter in the penalized likelihood from an entire solution path}
+best tuning parameter in the penalized likelihood from an entire solution path}
 \usage{
 perform_shrink(
   X,
@@ -21,10 +21,10 @@ perform_shrink(
 
 \item{Q_est}{J by K Q after screening by \code{\link{adg_em}} (one-level version)}
 
-\item{Z_candi}{K-column candidate latent attributes (cnandidates;
+\item{Z_candi}{K-column candidate latent attributes (candidates;
 \code{\link{adg_em}} (one-level version) )}
 
-\item{lambda_vec}{a descresing sequence of negative penalty parameters}
+\item{lambda_vec}{a decreasing sequence of negative penalty parameters}
 
 \item{c_ini}{J initial values of 1-slipping parameters}
 
@@ -44,5 +44,5 @@ that made the cut.
 }
 \description{
 performs shrinkage estimation and use Extended BIC (EBIC) to select the
-best tunning parameter in the penalized likelihood from an entire solution path
+best tuning parameter in the penalized likelihood from an entire solution path
 }
