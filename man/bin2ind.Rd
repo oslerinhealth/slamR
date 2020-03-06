@@ -7,13 +7,13 @@
 bin2ind(mat, LOG = FALSE)
 }
 \arguments{
-\item{mat}{A binary matrix the rows of which are the binary codes to be converted.}
+\item{mat}{A binary matrix; Each row is a binary representation to be converted.}
 
 \item{LOG}{Take the logarithm of the decimal integer (default is \code{TRUE});
 otherwise, set to \code{FALSE}.}
 }
 \value{
-A vector of numbers after conversion
+A vector of numbers after conversion (not a matrix)
 }
 \description{
 convert binary codes to decimal integers

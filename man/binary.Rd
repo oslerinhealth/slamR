@@ -4,10 +4,14 @@
 \alias{binary}
 \title{convert decimal integers to binary codes}
 \usage{
-binary(x, noBits)
+binary(x, k = NULL)
 }
 \arguments{
 \item{x}{a vector of base 10 integers}
+
+\item{k}{length of binary codes (if no specified, this will be the
+length of the binary representation for the maximum in \code{x}).
+Default to \code{NULL}.}
 }
 \value{
 A matrix of binary forms of x (by row)
@@ -16,7 +20,7 @@ A matrix of binary forms of x (by row)
 convert decimal integers to binary codes
 }
 \examples{
-decimals <- c(3,5,11,4)
-m <- binary(decimals)
-m
+decimals <- c(10,3,5)
+binary(decimals)
+binary(decimals,6)
 }

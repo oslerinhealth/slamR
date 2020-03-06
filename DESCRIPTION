@@ -1,8 +1,8 @@
 Package: slamR
 Type: Package
 Title: Structured Latent Attribute Models in R
-Version: 0.1.0
-Date: 2020-02-13
+Version: 0.2.0
+Date: 2020-03-06
 Authors@R: c(
      person("Zhenke", "Wu", email="zhenkewu@umich.edu",role=c("cre","aut","cph"),
      comment = c(ORCID = "0000-0001-7582-669X")),
@@ -12,14 +12,11 @@ Authors@R: c(
      )
 Maintainer: Zhenke Wu <zhenkewu@umich.edu>
 Description: This package implememnts fast algorithms to fit structured latent class models (SLAM)
-    for high-dimensional dependent binary data (Gu and Xu, 2019,
-    'JMLR'). SLAMs are a special family of discrete latent variable models widely used in social 
-    and biological sciences. The goal is to learn from high-dimensional data the 
-    signiﬁcant attribute patterns based on a SLAM with potentially high-dimensional 
-    conﬁgurations of the latent attributes. The algorithms perform selection of the 
-    attribute patterns, estimation of the unknown Q-matrix 
-    connecting the measurements to the latent attributes, and other model parameters
-    including proportion parameters and response probability parameters.
+    for high-dimensional dependent binary data (Gu and Xu, 2019,'JMLR'). SLAMs are a special family of 
+    discrete latent variable models widely used in social and biological sciences. The goal is to learn from high-dimensional data the 
+    signiﬁcant attribute patterns based on a SLAM with potentially high-dimensional conﬁgurations of the latent attributes.
+    The algorithms perform selection of the attribute patterns, estimation of the unknown Q-matrix connecting the measurements to the latent attributes, 
+    and other model parametersincluding proportion parameters and response probability parameters.
 Depends:
     R(>= 3.5.0)
 Imports:
@@ -40,6 +37,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 VignetteBuilder: knitr
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 URL: https://github.com/zhenkewu/slamR
 BugReports: https://github.com/zhenkewu/slamR/issues
+LinkingTo: Rcpp, RcppArmadillo
