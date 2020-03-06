@@ -53,7 +53,7 @@ Examples (two-level binary responses)
 
 - 1. Example code to use `slamR` is at [`inst/example/compare_flat.R`](inst/example/compare_flat.R)
 
-- 1. restricted latent class analysis with **pre-specified # of factors** but unknown # of clusters
+- 2. restricted latent class analysis with **pre-specified # of factors** but unknown # of clusters
 
 * Example of the Tree Structure of Observed ICD-9 Codes
 ![](inst/example_figure/tree.png)
