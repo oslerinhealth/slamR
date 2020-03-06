@@ -3,7 +3,7 @@
 An R package for Structured Latent Attribute Models (SLAM)
 
 zhenkewu badges:
-[![Travis CI Build Status](https://travis-ci.org/zhenkewu/rewind.svg?branch=master)](https://travis-ci.org/zhenkewu/slamR)
+[![Travis CI Build Status](https://travis-ci.org/zhenkewu/slamR.svg?branch=master)](https://travis-ci.org/zhenkewu/slamR)
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/zhenkewu/slamR?branch=master&svg=true)](https://ci.appveyor.com/project/zhenkewu/slamR)
 
 **Maintainer**: Zhenke Wu, zhenkewu@umich.edu
