@@ -3,3 +3,6 @@
 ^.*\.Rproj$
 .travis.yml
 ^appveyor\.yml$
+^DESCRIPTION\.bak$
+^\.travis\.yml$
+^\./\.travis\.yml\.bak$
