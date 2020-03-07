@@ -352,7 +352,9 @@ set.seed(0513)
 X <- cbind(X1,X2)
 
 mat_iter <- 50
+time1 <- Sys.time()
 res <- adg_em(X, Z_flat_ini, Q_flat_ini, max_iter, err_prob) # currently slow.
+Sys.time()-time1
 Z_est <- res$Z_est
 Z_candi <- res$Z_candi
 Q_arr   <- res$Q_arr
