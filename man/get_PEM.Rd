@@ -22,7 +22,7 @@ get_PEM(X, Q, A, lambda, c_ini, g_ini, nu_ini, thres_c, model = "DINA")
 \item{nu_ini}{initial potentials}
 
 \item{thres_c}{threshold for making sure M step does not generate negative
-probabilities (algorithm 1 of Xu and Gu JMIR 2019)}
+probabilities (algorithm 1 of Xu and Gu JMLR 2019)}
 
 \item{model}{"DINA" (default) or "DINO"}
 }

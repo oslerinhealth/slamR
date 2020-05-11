@@ -33,7 +33,7 @@ get_ideal_resp <- function(Q, Z) {
 
 #' 7 shaped binary array operation by bsxfun from matlab
 #'
-#' this function also multiple along the rows of A and columsn of B
+#' this function also multiple along the rows of A and columns of B
 #'
 #' @param A matrix of size d1 by d2
 #' @param B matrix of size d3 by d1

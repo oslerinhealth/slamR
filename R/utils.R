@@ -105,7 +105,7 @@ binary <- function(x,k=NULL){
 
 #' check if matrix Q is complete
 #'
-#' Check if there is an item soley requiring attribute k
+#' Check if there is an item solely requiring attribute k
 #' for each attribute k = 1, 2, ..., K
 #'
 #' @param Q binary matrix
